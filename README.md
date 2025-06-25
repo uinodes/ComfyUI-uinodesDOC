@@ -26,4 +26,5 @@ git clone https://github.com/uinodes/ComfyUI-uinodesDOC.git
 **说明**
 
 当前的节点文档功能是基于 uinodes 网站中已有的节点文章进行跳转展示的，因此**尚未覆盖所有节点**。部分节点在跳转时可能暂时没有对应的文档说明，说明该节点内容仍在补充中。我们也非常欢迎大家加入[uinodes 共创计划](https://uinodes.com/co-creation/plan)，共同完善网站的节点知识库，助力 ComfyUI 社区成长。
+如果该插件对您有所帮助，欢迎点个star👍
 
