@@ -14,6 +14,7 @@ git clone https://github.com/uinodes/ComfyUI-uinodesDOC.git
 ---
 
 **使用教程**
+2025/08/10：BUG：因为ComfyUI_frontend 1.26.1版本，节点标题区过大，无法点击事件，先添加右键节点，可跳转网站。
 
 安装本插件后，每个节点的右上角有一个“回形针”形状，点击即可跳转相应的说明文档界面。
 

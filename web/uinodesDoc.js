@@ -63,9 +63,14 @@ function buildNodeUrl(python_module, nodeName) {
 app.registerExtension({
 	name: "fsy.Link2uinodesCOM",
 	async beforeRegisterNodeDef(nodeType, nodeData) {
-		
+		const cnt = 0;
 		try {
 			addLinkIcon(nodeData, nodeType);
+			cnt++;
+			if (cnt == 1) {
+				console.log("nodeData", nodeData);
+				console.log("nodeType", nodeType);
+			}
 		} catch (error) {
 			console.error("Error in registering fsy.Link2uinodesCOM", error);
 		}
@@ -73,30 +78,6 @@ app.registerExtension({
 
 });
 
-/** 获取节点的名字 */
-function getNodeName(nodeData, nodeInstance) {
-	// 1. 从节点实例获取标题
-	if (nodeInstance && nodeInstance.title) {
-		return nodeInstance.title;
-	}
-	
-	// 2. 从节点数据获取显示名称
-	if (nodeData.display_name) {
-		return nodeData.display_name;
-	}
-	
-	// 3. 从节点数据获取名称
-	if (nodeData.name) {
-		return nodeData.name;
-	}
-	
-	// 4. 从节点类型获取
-	if (nodeInstance && nodeInstance.type) {
-		return nodeInstance.type;
-	}
-	
-	return "Unknown Node";
-}
 
 /** 计算图标位置 */
 function getIconPosition(nodeSize, iconSize, iconMargin, position) {
@@ -219,4 +200,33 @@ export const addLinkIcon = (
 		
 		return r;
 	}
+
+
+	/* 
+	updated: 2025-08-10
+	description: 标题过大无法触发点击，添加右键菜单事件进行网站导航
+	*/
+	const original_getExtraMenuOptions = nodeType.prototype.getExtraMenuOptions;
+	nodeType.prototype.getExtraMenuOptions = function(_, options) {
+        original_getExtraMenuOptions?.apply(this, arguments);
+        options.push({
+            content: "跳转uinodes.com查看文档",
+            callback: async () => {
+                const url = buildNodeUrl(nodeData.python_module, nodeData.name);
+                if (url) {
+                    const confirmed = confirm(`是否要打开以下链接？\n\n${url}\n\n点击"确定"将在新标签页中打开此链接。`);
+                    if (confirmed) {
+                        window.open(url, '_blank');
+                    }
+                }
+            }
+        })
+    } 
+
+
+
+
+
+
+
 } 
